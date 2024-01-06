@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
@@ -30,6 +32,26 @@ const Navbar = () => {
   }, []);
 
 
+  const navItems = [
+    {
+      name: 'Our Systems',
+      link: '/',
+    },
+    {
+      name: 'Booking',
+      link: '/booking',
+    },
+    {
+      name: 'Get a Quote',
+      link: '/get-a-quote',
+    },
+    {
+      name: 'Contact',
+      link: '/contact',
+    },
+  ];
+
+  const currentPage = usePathname();
 
   return (
     <nav className={`w-full opacity-80 ${typeof window !== 'undefined' && scrolY > 60 ? 'bg-black-main' : 'bg-transparent'} px-3 lg:px-0 fixed z-100 h-[80px]`}>
@@ -48,26 +70,18 @@ const Navbar = () => {
           className={` h-full ${isMobileMenuOpen ? 'flex flex-col' : 'hidden'} flex-col absolute px-4 py-2 top-[80px] left-0 right-0 w-[90%] md:w-auto mx-auto md:mx-0 md:top-0 bg-[#222] md:bg-transparent text-white md:flex md:flex-row justify-end md:items-centern gap-2 md:gap-6 md:relative`}
           animate={{ opacity: isMobileMenuOpen ? 1 : 0, height: isMobileMenuOpen ? 'auto' : 0, display: isMobileMenuOpen ? 'flex' : 'none' }}
         >
-          <Link href="/">
-            <li className="cursor-pointer uppercase font-bold">
-              <p>Our Systems</p>
-              <span>Our Systems</span>
-            </li>
-          </Link>
 
-          <Link href="get-a-quote">
-            <li className="cursor-pointer flex items-center gap-2 group uppercase">
-              <p>Get a Qoute</p>
-              <span>Get a Quote</span>
-            </li>
-          </Link>
+          {
+            navItems.map((item, index) => (
+              <Link href={item.link} key={index}>
+                <li className={`cursor-pointer uppercase ${item?.link === currentPage && 'font-bold'}`}>
+                  <p>{item.name}</p>
+                  <span>{item.name}</span>
+                </li>
+              </Link>
+            ))
+          }
 
-          <Link href="/contact">
-            <li className="cursor-pointer flex items-center gap-2 group uppercase">
-              <p>Contact</p>
-              <span>Contact</span>
-            </li>
-          </Link>
         </motion.ul>
       </div>
     </nav >
