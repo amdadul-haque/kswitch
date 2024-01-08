@@ -19,8 +19,7 @@ const Hero = () => {
           </Link>
         </div>
       </MyContainer >
-      <div className="h-screen">
-      </div>
+     
     </>
 
   )
